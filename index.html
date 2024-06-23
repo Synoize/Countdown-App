@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Countdown App</title>
+</head>
+<style>
+    main {
+        height: 100vh;
+        gap: 20px;
+    }
+
+    main,
+    #countdown-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    #countdown-container {
+        width: 300px;
+        height: 200px;
+        gap: 20px;
+    }
+
+    #countdown-timer {
+        font-size: 30px;
+        font-weight: bold;
+        color: rgb(94, 94, 94);
+    }
+
+    #target-date>input {
+        border: 2px solid rgb(212, 212, 212);
+        padding: 6px;
+        border-radius: 4px;
+        font-size: 14px;
+        outline: none;
+        font-size: 18px;
+    }
+</style>
+
+<body>
+    <main>
+        <h1 class="text-xl text-orange-400">Start CountDown</h1>
+        <div id="countdown-container" class="border-2 bg-slate-200">
+            <div id="countdown-timer"></div>
+            <div id="target-date" class="flex gap-2">
+                <!-- <input type="date"><input type="time"> -->
+                <p>Untill 2025</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const timer = document.querySelector("#countdown-timer");
+
+        const targetDate = new Date('2025-01-01T00:00:00');
+
+        function updateCountdown(time) {
+            const currentDate = new Date();
+
+            const timeDifference = targetDate - currentDate;
+            console.log(timeDifference);
+
+            const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+            // --> Basically, 1000 is used here just for converting seconds to milliseconds.
+            // --> Number of seconds in a day = 24 * 60 * 60 = 86400 seconds.
+            // --> 1 second = 1000 milliseconds.
+            // --> So after calculating the expression, the result is in milliseconds.
+            // --> days * 24 * 60 * 60 * 1000 = days * 86400000 ms
+
+            const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+            const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+            const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+            timer.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`
+
+            setTimeout(updateCountdown, 1000)
+        }
+
+        updateCountdown()
+
+    </script>
+</body>
+
+</html>
